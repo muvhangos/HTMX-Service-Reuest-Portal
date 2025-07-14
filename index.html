@@ -1,0 +1,18 @@
+{% extends "requests/base.html" %}
+{% block content %}
+<div class="app-wrapper">
+  <div class="alert-intro">👋 Welcome to the <strong>Service Request Portal</strong>!</div>
+  <h2 class="text-center mb-4">📝 Submit Your Request</h2>
+  <form hx-post="{% url 'create-request' %}" hx-target="#request-list" hx-swap="beforeend" class="mb-4">
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-submit w-100">🚀 Submit Request</button>
+  </form>
+  <hr />
+  <h4 class="mb-3">📋 Submitted Requests</h4>
+  <div id="request-list" class="mt-2">
+    {% for request in requests %}
+      {% include "requests/partials/request_item.html" %}
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

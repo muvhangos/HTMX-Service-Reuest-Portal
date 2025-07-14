@@ -1,0 +1,27 @@
+<div class="request-box" id="request-{{ request.id }}">
+  <strong>{{ request.name }}</strong> ({{ request.email }})<br />
+  📞 {{ request.phone }}<br />
+  <p>{{ request.description }}</p>
+  <label>Status:</label>
+  <select class="form-select form-select-sm w-auto d-inline-block mb-2"
+          name="status"
+          hx-post="{% url 'update-status' request.id %}"
+          hx-trigger="change"
+          hx-vals='{"status": this.value}'>
+    {% for s in "Pending,In Progress,Resolved".split(',') %}
+      <option value="{{ s }}" {% if s == request.status %}selected{% endif %}>{{ s }}</option>
+    {% endfor %}
+  </select>
+  <button class="btn btn-sm btn-delete float-end"
+          hx-delete="{% url 'delete-request' request.id %}"
+          hx-target="#request-{{ request.id }}"
+          hx-swap="outerHTML">❌ Delete</button>
+  <form hx-post="{% url 'submit-response' request.id %}"
+        hx-target="#response-box-{{ request.id }}"
+        hx-swap="outerHTML" class="mt-3">
+    <label>Provider Response:</label>
+    <textarea name="response" class="form-control mb-2" rows="2">{{ request.response }}</textarea>
+    <button type="submit" class="btn btn-outline-success btn-sm">Send Response</button>
+  </form>
+  {% include "requests/partials/response.html" %}
+</div>

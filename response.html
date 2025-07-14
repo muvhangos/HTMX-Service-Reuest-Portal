@@ -1,0 +1,5 @@
+<div id="response-box-{{ request.id }}" class="response-section {% if not request.response %}d-none{% endif %}">
+  {% if request.response %}
+    🗨️ 🎯 Thanks for reaching out! {{ request.response }}
+  {% endif %}
+</div>
